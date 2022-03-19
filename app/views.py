@@ -20,13 +20,38 @@ class statsCollector():
     def __init__(self):
         self.raw_data = []
         self.data = []
+        self.traffic_received = 0
+        self.traffic_sent = 0
     
     def process_data(self, data):
         if data: data_array = data.split('\n')
         else: data_array = self.data.split('\n')
 
-        data = [user_data.split() for user_data in data_array]
-        for d in data: print(d)
+        self.data = [user_data.split() for user_data in data_array]
+    
+    def get_received_traffic(self):
+        if self.traffic_received == 0:
+            mib = sum([float(d[3].replace('MiB', ''))/1024 for d in self.data if 'MiB' in d[3]])
+            gib = sum([float(d[3].replace('GiB', '')) for d in self.data if 'GiB' in d[3]])
+            self.traffic_received = mib + gib
+        return self.traffic_received
+
+    def get_sent_traffic(self):
+        if self.traffic_sent == 0:
+            mib = sum([float(d[4].replace('MiB', ''))/1024 for d in self.data if 'MiB' in d[4]])
+            gib = sum([float(d[4].replace('GiB', '')) for d in self.data if 'GiB' in d[4]])
+            self.traffic_sent = mib + gib
+
+        return self.traffic_sent
+
+    def get_full_traffic(self):
+        return self.get_sent_traffic() + self.get_received_traffic()
+
+    def get_peer_count(self):
+        return len(self.data)-1
+    
+    def get_active_peer_count(self):
+        return self.get_peer_count() - len([d[4] for d in self.data if "0B" in d[4]])
 
 
 

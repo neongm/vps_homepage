@@ -12,3 +12,9 @@ grig_desktop             (none)                     10.6.0.9        0B          
 
 st = statsCollector()
 st.process_data(data=TESTING_STATS)
+
+assert st.get_received_traffic() == 1324/1024, f"received traffic calculation failed, true = {1324/1024}, got = {st.get_received_traffic()}"
+assert st.get_sent_traffic() ==  1.7+1.6+5.1+2.1+127/1024, f"sent traffic calculation failed, true = {1.7+1.6+5.1+2.1+127/1024}, got = {st.get_received_traffic()}"
+assert round(st.get_full_traffic(), 2) == round(1324/1024 + 1.7+1.6+5.1+2.1+127/1024, 2), f"full traffic calculation failed, true = {round(1324/1024 + 1.7+1.6+5.1+2.1+127/1024, 2)}, got = {round(st.get_full_traffic(), 2)}"
+assert st.get_peer_count() == 8, f"user count failed, expected {8}, got {st.get_peer_count()}"
+assert st.get_active_peer_count() == 5, f"active user count failed, expected {5}, got {st.get_active_peer_count()}"
