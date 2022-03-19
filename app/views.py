@@ -5,19 +5,8 @@ import re
 # Create your views here.
 
 
-def index(req):
-
-    context = {
-        'title': 'wireguard vps server',
-        'uptimeDays': round(uptime()/(3600*24), 2),
-        'uptimeHours': round(uptime()/3600, 2),
-        'uptimeSeconds': round(uptime(), 2),
-    }
-    return render(req, 'index.html', context)
-
-
 class statsCollector():
-    def __init__(self):
+    def __init__(self, data):
         self.raw_data = []
         self.data = []
         self.traffic_received = 0
@@ -53,6 +42,30 @@ class statsCollector():
     def get_active_peer_count(self):
         return self.get_peer_count() - len([d[4] for d in self.data if "0B" in d[4]])
 
+
+def index(req):
+    # getting data
+    p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
+    (output, err) = p.communicate()
+    p_status = p.wait()
+
+    # proccessing data
+    sc = statsCollector()
+    sc.process_data()
+
+    context = {
+        'title': 'wireguard vps server',
+        'uptimeDays': round(uptime()/(3600*24), 2),
+        'uptimeHours': round(uptime()/3600, 2),
+        'uptimeSeconds': round(uptime(), 2),
+        'receivedTraffic': sc.get_received_traffic(),
+        'sentTraffic': sc.get_sent_traffic(),
+        'fullTraffic': sc.get_full_traffic(),
+        'peerCount': sc.get_peer_count(),
+        'activePeerCount': sc.get_active_peer_count(),
+
+    }
+    return render(req, 'index.html', context)
 
 
 def index_testing_stats(req):

@@ -1,6 +1,6 @@
 
 <style>
-    body{
+body{
     font-family: 'Courier New', Courier, monospace;
     height: 100%;
     overflow: hidden;
@@ -27,16 +27,28 @@
 .t-white{
     color: #d9d9d9;
 }
-
 .center-cont{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
-
+.f-cont-row{
+    display: flex;
+    flex-direction: row;
+}
+.f-cont-column{
+    display: flex;
+    flex-direction: column;
+}
 .h-100{
     height: 100%;
+}
+.p-10{
+    padding: 10px;
+}
+.m-10{
+    margin: 10px;
 }
 </style>
 <!DOCTYPE html>
@@ -49,19 +61,30 @@
 </head>
 <body class="bg-dark t-white">
     <div class="center-cont h-100">
-        <div>
-            <div class="t-bald t-big">{{title}}</div>
+
+        <div class="f-cont-column p">
+            <div class="t-bald t-big p-10">{{title}}</div>
             <br>
-            <div>
-                <div class="">server uptime:</div>
-                <div class="t-small">{{uptimeDays}} days</div>
-                <div class="t-small">{{uptimeHours}} hours</div>
-                <div class="t-small">{{uptimeSeconds}} seconds</div>
-            </div>
-            <br>
-            <div>
-                <div>traffic used:</div>
-                <div class="t-small">{{stats}} GiB</div>    
+            <div class="m-10">
+                <div>
+                    <div class="">server uptime:</div>
+                    <div class="t-small">{{uptimeDays}} days</div>
+                    <div class="t-small">{{uptimeHours}} hours</div>
+                    <div class="t-small">{{uptimeSeconds}} seconds</div>
+                </div>
+                <br>
+                <div>
+                    <div>traffic used:</div>
+                    <div class="t-small">{{receivedTraffic}} GiB received</div>
+                    <div class="t-small">{{sentTraffic}} GiB sent</div>
+                    <div class="t-small">{{fullTraffic}} GiB total</div>    
+                </div>
+                <br>
+                <div>
+                    <div>peers:</div>
+                    <div class="t-small">{{peerCount}} peers</div>
+                    <div class="t-small">{{activePeerCount}} used peers</div>
+                </div>
             </div>
         </div>
     </div>
