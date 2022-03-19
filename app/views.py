@@ -51,7 +51,7 @@ def index(req):
 
     # proccessing data
     sc = statsCollector()
-    sc.process_data()
+    sc.process_data(output)
 
     context = {
         'title': 'wireguard vps server',
