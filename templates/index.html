@@ -50,6 +50,39 @@ body{
 .m-10{
     margin: 10px;
 }
+.translate-anim{
+    animation: translate cubic-bezier(0,0,0,1) 0.4s;
+    transform: translateY(0px);
+}
+.fade-in-1 {
+  animation: fadeIn ease-out 1s;
+  opacity: 1;
+}
+.fade-in-2 {
+  animation: fadeIn ease-out 1.5s;
+  opacity: 1;
+}
+.fade-in-3 {
+  animation: fadeIn ease-out 2s;
+  opacity: 1;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes translate {
+  0% {
+    transform: translateY(10px); 
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,10 +96,10 @@ body{
     <div class="center-cont h-100">
 
         <div class="f-cont-column p">
-            <div class="t-bald t-big p-10">{{title}}</div>
+            <div class="t-bald t-big p-10 ">{{title}}</div>
             <br>
-            <div class="m-10">
-                <div>
+            <div class="m-10 translate-anim">
+                <div class="fade-in-1">
                     <div class="">server uptime:</div>
                     <div class="t-small">{{uptimeDays}} days</div>
                     <div class="t-small">{{uptimeHours}} hours</div>
@@ -74,14 +107,14 @@ body{
                 </div>
                 <br>
                 {% if peerCount %}
-                <div>
+                <div class="fade-in-2">
                     <div>traffic used:</div>
                     <div class="t-small">{{receivedTraffic}} GiB received</div>
                     <div class="t-small">{{sentTraffic}} GiB sent</div>
                     <div class="t-small">{{fullTraffic}} GiB total</div>    
                 </div>
                 <br>
-                <div>
+                <div class="fade-in-3">
                     <div>peers:</div>
                     <div class="t-small">{{peerCount}} peers</div>
                     <div class="t-small">{{activePeerCount}} used peers</div>
