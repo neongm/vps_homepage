@@ -10,8 +10,8 @@ grig_mobile              00.000.000.00:00000        10.6.0.7        114MiB      
 neongm_laptop            00.000.000.00:00000        10.6.0.8        37MiB               127MiB          Mar 19 2022 - 10:35:34
 grig_desktop             (none)                     10.6.0.9        0B                  0B              (not yet)"""
 
-st = statsCollector()
-st.process_data(data=TESTING_STATS)
+st = statsCollector(data=TESTING_STATS)
+st.process_data()
 
 assert st.get_received_traffic() == 1324/1024, f"received traffic calculation failed, true = {1324/1024}, got = {st.get_received_traffic()}"
 assert st.get_sent_traffic() ==  1.7+1.6+5.1+2.1+127/1024, f"sent traffic calculation failed, true = {1.7+1.6+5.1+2.1+127/1024}, got = {st.get_received_traffic()}"

@@ -6,13 +6,14 @@ import re
 
 
 class statsCollector():
-    def __init__(self):
-        self.data = []
+    def __init__(self, data = []):
+        self.data = data
         self.traffic_received = 0
         self.traffic_sent = 0
     
-    def process_data(self, data):
-        data_array = data.split('\n')
+    def process_data(self, data = []):
+        if len(self.data): data_array = self.data.split('\n')
+        else: data_array = data.split('\n')
 
         self.data = [user_data.split() for user_data in data_array]
     
@@ -48,8 +49,8 @@ def index(req):
     p_status = p.wait()
 
     # proccessing data
-    sc = statsCollector()
-    sc.process_data(output.decode('utf-8'))
+    sc = statsCollector(output.decode('utf-8'))
+    sc.process_data()
 
     context = {
         'title': 'wireguard vps server',
