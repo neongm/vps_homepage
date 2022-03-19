@@ -15,7 +15,7 @@ class statsCollector():
         if len(self.data): data_array = self.data.split('\n')
         else: data_array = data.split('\n')
 
-        self.data = [user_data.split() for user_data in data_array]
+        self.data = [user_data.split() for user_data in data_array][1:-1:]
         for i in self.data: print(i)
         
     
