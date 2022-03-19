@@ -6,7 +6,7 @@ import re
 
 
 class statsCollector():
-    def __init__(self, data):
+    def __init__(self):
         self.raw_data = []
         self.data = []
         self.traffic_received = 0
