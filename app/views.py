@@ -18,9 +18,10 @@ def index_testing_stats(req):
     p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     p_status = p.wait()
-    stats = output.split()
-    MiB = sum([float(val.replace(b'MiB', '')) for val in stats if b'MiB' in val])
-    GiB = sum([float(val.replace(b'GiB', '')) for val in stats if b'GiB' in val])
+    
+    stats = output.decode('utf-8').split()
+    MiB = sum([float(val.replace('MiB', '')) for val in stats if 'MiB' in val])
+    GiB = sum([float(val.replace('GiB', '')) for val in stats if 'GiB' in val])
     print(GiB)
     data_used = MiB/1024 + GiB
     context = {
