@@ -2,6 +2,7 @@ from django.shortcuts import render
 from uptime import uptime
 import subprocess
 import re
+from random import choice
 # Create your views here.
 
 
@@ -43,11 +44,12 @@ class statsCollector():
 
 
 def index(req):
+    catMessages = ["have a good day", "rusk rusk rusk rusk", "the table", "how does it work", "boo", "you're awesome", "code works", "you're secure", "furfur", "meow"]
     # getting data
     p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     p_status = p.wait()
-
+    
     # proccessing data
     sc = statsCollector(output.decode('utf-8'))
     sc.process_data()
@@ -62,6 +64,7 @@ def index(req):
         'receivedTraffic': round(sc.get_received_traffic(), 2),
         'sentTraffic': round(sc.get_sent_traffic(), 2),
         'fullTraffic': round(sc.get_full_traffic(), 2),
+        'catSays': choice(catMessages)
     }
     return render(req, 'index.html', context)
 
