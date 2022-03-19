@@ -16,6 +16,8 @@ class statsCollector():
         else: data_array = data.split('\n')
 
         self.data = [user_data.split() for user_data in data_array]
+        print(self.data)
+        
     
     def get_received_traffic(self):
         if self.traffic_received == 0:
