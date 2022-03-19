@@ -73,6 +73,7 @@ body{
                     <div class="t-small">{{uptimeSeconds}} seconds</div>
                 </div>
                 <br>
+                {% if peerCount %}
                 <div>
                     <div>traffic used:</div>
                     <div class="t-small">{{receivedTraffic}} GiB received</div>
@@ -85,6 +86,12 @@ body{
                     <div class="t-small">{{peerCount}} peers</div>
                     <div class="t-small">{{activePeerCount}} used peers</div>
                 </div>
+                {% else %}
+                <div>
+                    <div>traffic used:</div>
+                    <div class="t-small">{{stats}} GiB</div>  
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

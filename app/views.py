@@ -7,14 +7,12 @@ import re
 
 class statsCollector():
     def __init__(self):
-        self.raw_data = []
         self.data = []
         self.traffic_received = 0
         self.traffic_sent = 0
     
     def process_data(self, data):
-        if data: data_array = data.split('\n')
-        else: data_array = self.data.split('\n')
+        data_array = data.split('\n')
 
         self.data = [user_data.split() for user_data in data_array]
     
