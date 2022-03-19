@@ -16,7 +16,7 @@ class statsCollector():
         else: data_array = data.split('\n')
 
         self.data = [user_data.split() for user_data in data_array]
-        print(self.data)
+        for i in self.data: print(i)
         
     
     def get_received_traffic(self):
