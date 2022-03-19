@@ -10,10 +10,17 @@
 </head>
 <body class="bg-dark t-white">
     <div class="center-cont h-100">
-        <div class="t-bald t-big">{{title}}</div>
-        <br>
-        <div>server uptime: {{uptimeHours}} hours</div>
-        <div>{{uptimeSeconds}} seconds</div>
+        <div>
+            <div class="t-bald t-big">{{title}}</div>
+            <br>
+            
+            <div>
+                <div class="">server uptime:</div>
+                <div class="t-small">{{uptimeDays}} days</div>
+                <div class="t-small">{{uptimeHours}} hours</div>
+                <div class="t-small">{{uptimeSeconds}} seconds</div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
