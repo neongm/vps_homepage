@@ -154,11 +154,11 @@ function togglePerUserStats(){
     if(overall_stats_cont.classList.contains("showElement")){
         container_to_show = per_user_stats_cont; // automate detection
         container_to_hide = overall_stats_cont;
-        hide_btn.innerHTML = "&#129121;";
+        hide_btn.innerHTML = "-";
     }else{
         container_to_show = overall_stats_cont; // automate detection
         container_to_hide = per_user_stats_cont;
-        hide_btn.innerHTML = "&#129123;";
+        hide_btn.innerHTML = "=";
     }
 
     container_to_hide.classList.remove("showElement");
@@ -242,7 +242,7 @@ function togglePerUserStats(){
     </div>
     <div style="position: absolute; bottom: 0px;" class="center-cont w-100 fade-in-3 translate-anim t-small">
         <div class="center-cont" style="width: 130px; height: 50px; cursor: pointer;" onclick="togglePerUserStats()">
-            <div style="font-size: large; width: 35px; height: 35px; border-radius: 50%; border: 1px solid #d9d9d9;" class="center-cont" id="hide_btn">&#129123;</div>
+            <div style="font-size: large; width: 35px; height: 35px; border-radius: 50%; border: 1px solid #d9d9d9;" class="center-cont" id="hide_btn">=</div>
         </div>
         <br><br><br>
         <div>~(=^‥^)ノ{{catSays}}</div>
