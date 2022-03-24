@@ -1,0 +1,240 @@
+
+<style>
+body{
+    font-family: 'Courier New', Courier, monospace;
+    height: 100%;
+    overflow: hidden;
+}
+
+.bg-dark{
+    background: #222222;
+}
+.bg-white{
+    background: #d9d9d9;
+}
+.t-big{
+    font-size: larger 
+}
+.t-small{
+    font-size: small
+}
+.t-dark{
+    color: #222222;
+}
+.t-bald{
+    font-weight: bold;
+}
+.t-white{
+    color: #d9d9d9;
+}
+.center-cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.f-cont-row{
+    display: flex;
+    flex-direction: row;
+}
+.f-cont-column{
+    display: flex;
+    flex-direction: column;
+}
+.h-100{
+    height: 100%;
+}
+.w-100{
+    width: 100%;
+}
+.p-10{
+    padding: 10px;
+}
+.m-10{
+    margin: 10px;
+}
+.translate-anim{
+    animation: translate cubic-bezier(0,0,0,1) 0.4s;
+    transform: translateY(0px);
+}
+.translate-anim-back{
+    animation: translate-back cubic-bezier(0,0,0,1) 0.4s;
+    transform: translateY(0px);
+}
+.fade-in-1 {
+  animation: fadeIn ease-out 1s;
+  opacity: 1;
+}
+.fade-in-2 {
+  animation: fadeIn ease-out 1.5s;
+  opacity: 1;
+}
+.fade-in-3 {
+  animation: fadeIn ease-out 2s;
+  opacity: 1;
+}
+.fade-out-1{
+    animation: fadeOut ease-out 1s forwards;
+    opacity: 1;
+    display: block;
+}
+@keyframes fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+@keyframes fadeOut {
+  0% {
+      opacity: 1!important;
+    }
+  100% {
+      opacity: 0!important;
+    }
+} 
+@keyframes translate {
+  0% {transform: translateY(10px);}
+  100% {transform: translateY(0px);}
+}
+@keyframes translate-back {
+  0% {transform: translateY(0px);}
+  100% {transform: translateY(10px);}
+}
+
+.showElement{
+    animation: ShowElement ease-in-out 0.15s forwards;
+    opacity: 1;
+    transform: translateY(0px);
+}
+.hideElement{
+    animation: HideElement ease-in-out 0.15s forwards;
+    opacity: 0;
+    transform: translateY(0px);
+}
+@keyframes ShowElement{
+    0%{
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+@keyframes HideElement{
+    0%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+*::-webkit-scrollbar {
+  width: 4px;               /* ширина scrollbar */
+}
+*::-webkit-scrollbar-track {
+  background: #222222ff;        /* цвет дорожки */
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #444444;    /* цвет плашки */
+  border-radius: 4px;       /* закругления плашки */
+}
+
+</style>
+
+<script>
+function togglePerUserStats(){
+    console.log("toggle per user stats");
+    
+    overall_stats_cont = document.getElementById("overall_stats_cont");
+    per_user_stats_cont = document.getElementById("per_user_stats_cont");
+
+    if(overall_stats_cont.classList.contains("showElement")){
+        container_to_show = per_user_stats_cont; // automate detection
+        container_to_hide = overall_stats_cont;
+        hide_btn.innerHTML = "&#129121;";
+    }else{
+        container_to_show = overall_stats_cont; // automate detection
+        container_to_hide = per_user_stats_cont;
+        hide_btn.innerHTML = "&#129123;";
+    }
+
+    container_to_hide.classList.remove("showElement");
+    container_to_hide.classList.add("hideElement");
+
+    setTimeout(() => {
+        container_to_hide.style.display='none';
+        container_to_show.style.display='block';
+        container_to_show.classList.add("showElement")
+        container_to_show.classList.remove("hideElement");
+    }, 100);
+
+
+}
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, isnitial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<body class="bg-dark t-white">
+    <div class="center-cont h-100 w-100">
+
+        <div class="f-cont-column w-100" style="height: 60vh; width: 30vw; align-items: center;">
+            <div class="t-bald t-big p-10 ">{{title}}</div>
+            <br>
+            <div class="m-10 showElement w-100" style="overflow-y: scroll;" id="overall_stats_cont">
+                <div class="fade-in-1">
+                    <div class="">server uptime:</div>
+                    <div class="t-small">{{uptimeDays}} days</div>
+                    <div class="t-small">{{uptimeHours}} hours</div>
+                    <div class="t-small">{{uptimeSeconds}} seconds</div>
+                </div>
+                <br>
+                {% if peerCount %}
+                <div class="fade-in-2">
+                    <div>traffic used:</div>
+                    <div class="t-small">{{receivedTraffic}} GiB received</div>
+                    <div class="t-small">{{sentTraffic}} GiB sent</div>
+                    <div class="t-small">{{fullTraffic}} GiB total</div>    
+                </div>
+                <br>
+                <div class="fade-in-3">
+                    <div>peers:</div>
+                    <div class="t-small">{{peerCount}} peers</div>
+                    <div class="t-small">{{activePeerCount}} used peers</div>
+                </div>
+                {% else %}
+                <div>
+                    <div>traffic used:</div>
+                    <div class="t-small">{{stats}} GiB</div>  
+                </div>
+                {% endif %}
+            </div>
+            <div class="m-10 translate-anim hideElement w-100" style="display: none; overflow-y: scroll; " id="per_user_stats_cont">
+                {% for username, user in perUserStats.items %}
+                {% if user.sentTraffic != 0 %}
+                <div class="fade-in-1">
+                    <div class="">peer: {{username}}</div>
+                    <div class="t-small">{{user.sentTraffic}} GiB sent</div>
+                    <div class="t-small">{{user.receivedTraffic}} GiB reveived</div>
+                </div>
+                <br>
+                {% endif %}
+                {% endfor %}
+        </div>
+
+    </div>
+    <div style="position: absolute; bottom: 0px;" class="center-cont w-100 fade-in-3 translate-anim t-small">
+        <div class="center-cont" style="width: 130px; height: 50px; cursor: pointer;" onclick="togglePerUserStats()">
+            <div style="font-size: large; width: 35px; height: 35px; border-radius: 50%; border: 1px solid #d9d9d9;" class="center-cont" id="hide_btn">&#129123;</div>
+        </div>
+        <br><br><br>
+        <div>~(=^‥^)ノ{{catSays}}</div>
+    </div>
+</body>
+</html>

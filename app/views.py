@@ -59,8 +59,6 @@ class statsCollector():
     def __init__(self, data = []):
         self.raw_data = data
         self.data = []
-        self.traffic_received = 0
-        self.traffic_sent = 0
         self.per_user_stats = []
         self._process_per_user_stats()
 
@@ -82,10 +80,10 @@ class statsCollector():
         return len(self.per_user_stats)
     
     def get_active_peer_count(self):
-        return len([' ' for user_data in self.per_user_stats if user_data.used_at_least_once()])
+        return [user_data.used_at_least_once() for user_data in self.per_user_stats].count(True)
     
     def get_peers_used_recently_count(self):
-        return len([' ' for user_data in self.per_user_stats if user_data.is_active()])
+        return [user_data.is_active() for user_data in self.per_user_stats].count(True)
 
     def get_per_user_stats(self): return self.per_user_stats 
 
@@ -93,15 +91,34 @@ class statsCollector():
 def index(req):
     catMessages = ["have a good day", "rusk rusk rusk rusk", "the table", "how does it work", "boo", "you're awesome", "code works", "you're secure", "furfur", "meow", "yes, the кот"]
     # getting data
-    p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
-    (output, err) = p.communicate()
-    p_status = p.wait()
+    #p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
+    #(output, err) = p.communicate()
+    #p_status = p.wait()
     
     # proccessing data
-
-    sc = statsCollector(output.decode('utf-8'))
-    #sc = statsCollector(TESTING_STATS)
+    TESTING_STATS = """Name                     Remote IP                  Virtual IP      Bytes Received      Bytes Sent      Last Seen
+neongm_main_desktop      00.000.000.00:00000        10.6.0.2        211MiB              1.7GiB          Mar 22 2022 - 12:19:22
+neongm_android_1         00.000.000.00:00000        10.6.0.3        462MiB              1.6GiB          Mar 21 2022 - 10:36:14
+ars_peer_poland          00.000.000.00:00000        10.6.0.4        500MiB              5.1GiB          Mar 19 2022 - 09:28:34
+primary                  (none)                     10.6.0.5        0B                  0B              (not yet)
+mobile                   (none)                     10.6.0.6        0B                  0B              (not yet)
+grig_mobile              00.000.000.00:00000        10.6.0.7        114MiB              2.1GiB          Mar 19 2022 - 10:37:18
+neongm_laptop            00.000.000.00:00000        10.6.0.8        37MiB               127MiB          Mar 19 2022 - 10:35:34
+grig_desktop             (none)                     10.6.0.9        0B                  0B              (not yet)
+: somethin something :"""
+    
+    #sc = statsCollector(output.decode('utf-8'))
+    sc = statsCollector(TESTING_STATS)
     per_user_stats = sc.get_per_user_stats()
+    users_stats = {user_data.get_user_name(): {
+        'activeRecently': user_data.is_active(),
+        'usedAtLeastOnce': user_data.used_at_least_once(),
+        'fullTraffic': round(user_data.get_traffic_full(), 2),
+        'sentTraffic': round(user_data.get_traffic_sent(), 2),
+        'receivedTraffic': round(user_data.get_traffic_received(), 2),
+        'virtualIp': user_data.get_virtual_ip(),
+        'lastUseDate': user_data.get_last_use_date()
+    } for user_data in per_user_stats}
 
 
     context = {
@@ -114,10 +131,10 @@ def index(req):
         'receivedTraffic': round(sc.get_received_traffic(), 2),
         'sentTraffic': round(sc.get_sent_traffic(), 2),
         'fullTraffic': round(sc.get_full_traffic(), 2),
-        'catSays': choice(catMessages)
+        'catSays': choice(catMessages),
+        'perUserStats': users_stats
     }
-    return render(req, 'index.html', context)
-
+    return render(req, 'index_extended.html', context)
 
 def index_testing_stats(req):
     p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
