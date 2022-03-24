@@ -96,7 +96,7 @@ def index(req):
     p_status = p.wait()
     
     # proccessing data
-    
+    #sc = statsCollector(data=TESTING_STATS)
     sc = statsCollector(output.decode('utf-8'))
     per_user_stats = sc.get_per_user_stats()
 
