@@ -91,9 +91,9 @@ class statsCollector():
 def index(req):
     catMessages = ["have a good day", "rusk rusk rusk rusk", "the table", "how does it work", "boo", "you're awesome", "code works", "you're secure", "furfur", "meow", "yes, the кот"]
     # getting data
-    #p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
-    #(output, err) = p.communicate()
-    #p_status = p.wait()
+    p = subprocess.Popen(["pivpn -c"], stdout=subprocess.PIPE, shell=True)
+    (output, err) = p.communicate()
+    p_status = p.wait()
     
     # proccessing data
     
