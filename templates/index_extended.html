@@ -141,6 +141,7 @@ body{
   border-radius: 4px;       /* закругления плашки */
 }
 
+
 </style>
 
 <script>
@@ -220,8 +221,18 @@ function togglePerUserStats(){
                 {% if user.sentTraffic != 0 %}
                 <div class="fade-in-1">
                     <div class="">peer: {{username}}</div>
+                    <div class="t-small">{{user.fullTraffic}} GiB total</div>
                     <div class="t-small">{{user.sentTraffic}} GiB sent</div>
                     <div class="t-small">{{user.receivedTraffic}} GiB reveived</div>
+                </div>
+                <br>
+                {% endif %}
+                {% endfor %}
+                {% for username, user in perUserStats.items %}
+                {% if user.sentTraffic == 0 %}
+                <div class="fade-in-1">
+                    <div class="">peer: {{username}}</div>
+                    <div class="t-small">Not used yet</div>
                 </div>
                 <br>
                 {% endif %}
