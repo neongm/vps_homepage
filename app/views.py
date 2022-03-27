@@ -38,7 +38,7 @@ class userStats():
         return f"{self.data[5]} {self.data[6]} {self.data[7]}"
 
     def used_at_least_once(self):
-        if self.get_traffic_received() == 0: return False
+        if self.get_traffic_sent() == 0: return False
         return True
 
     def is_active(self): # very bad implementataion, hope it at least works TODO fix is_active
