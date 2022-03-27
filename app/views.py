@@ -15,6 +15,7 @@ class userStats():
         if '0B' in self.data[index]: return 0
         if 'GiB'in self.data[index]: return float(self.data[index].replace('GiB', ''))
         if 'MiB'in self.data[index]: return float(self.data[index].replace('MiB', ''))/1024
+        if 'KiB'in self.data[index]: return float(self.data[index].replace('KiB', ''))/1024/1024
         assert False, f"method _read_traffic_at_index() didn't find the traffic data at index {index} in self.data, got {self.data[index]}\nself.data = {self.data}"
     
     def get_traffic_sent(self): #id of bytes sent is 4, received 3
